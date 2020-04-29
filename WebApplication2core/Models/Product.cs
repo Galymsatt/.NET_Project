@@ -15,9 +15,9 @@ namespace WebApplication2core.Models
         public string name { get; set; }
         public string content { get; set; }
         public Double price { get; set; }
-        
         public long category_id { get; set; }
-        
+        public Category category { get; set; }
+
 
     }
 }

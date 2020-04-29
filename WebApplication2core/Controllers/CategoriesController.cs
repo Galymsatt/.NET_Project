@@ -13,8 +13,6 @@ namespace WebApplication2core.Controllers
     {
         private readonly ApplicationContext _context;
 
-        private ApplicationContext db = new ApplicationContext();//men kostym
-        
         public CategoriesController(ApplicationContext context)
         {
             _context = context;
@@ -24,8 +22,6 @@ namespace WebApplication2core.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Categories.ToListAsync());
-            //return View(db.Categories.ToList());
-            //return View();
         }
 
         // GET: Categories/Details/5

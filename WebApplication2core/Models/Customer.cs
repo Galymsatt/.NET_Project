@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace WebApplication2core.Models
 {
-    public class Category
+    public class Customer
     {
+
         [Key]
         public long id { get; set; }
         public string name { get; set; }
 
-        public List<Product> products { get; set; }
     }
 }
