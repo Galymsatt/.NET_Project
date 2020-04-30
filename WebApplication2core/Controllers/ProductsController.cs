@@ -19,21 +19,21 @@ namespace WebApplication2core.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Products.ToListAsync());
+            return View(_context.Products.ToList());
         }
 
         // GET: Products/Details/5
-        public async Task<IActionResult> Details(long? id)
+        public IActionResult Details(long? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var product = await _context.Products
-                .FirstOrDefaultAsync(m => m.id == id);
+            var product = _context.Products.Find(id);
+                
             if (product == null)
             {
                 return NotFound();
@@ -52,27 +52,27 @@ namespace WebApplication2core.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,name,content,price,category_id")] Product product)
+        //[ValidateAntiForgeryToken]
+        public IActionResult Create([Bind("id,name,content,price,category_id")] Product product)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(product);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             return View(product);
         }
 
         // GET: Products/Edit/5
-        public async Task<IActionResult> Edit(long? id)
+        public IActionResult Edit(long? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var product = await _context.Products.FindAsync(id);
+            var product = _context.Products.Find(id);
             if (product == null)
             {
                 return NotFound();
@@ -84,8 +84,8 @@ namespace WebApplication2core.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("id,name,content,price,category_id")] Product product)
+        //[ValidateAntiForgeryToken]
+        public IActionResult Edit(long id, [Bind("id,name,content,price,category_id")] Product product)
         {
             if (id != product.id)
             {
@@ -97,7 +97,7 @@ namespace WebApplication2core.Controllers
                 try
                 {
                     _context.Update(product);
-                    await _context.SaveChangesAsync();
+                    _context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -116,15 +116,15 @@ namespace WebApplication2core.Controllers
         }
 
         // GET: Products/Delete/5
-        public async Task<IActionResult> Delete(long? id)
+        public IActionResult Delete(long? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var product = await _context.Products
-                .FirstOrDefaultAsync(m => m.id == id);
+            var product = _context.Products.Find(id);
+                
             if (product == null)
             {
                 return NotFound();
@@ -135,12 +135,12 @@ namespace WebApplication2core.Controllers
 
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(long id)
+        //[ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(long id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product =  _context.Products.Find(id);
             _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
