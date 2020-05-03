@@ -10,8 +10,25 @@ namespace WebApplication2core.Controllers
 {
     public class HomeController : Controller
     {
+
+        private readonly ApplicationContext _context;
+
+        public HomeController(ApplicationContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
+
+            List<Product> products = _context.Products.ToList();
+            foreach(Product p in products){
+                p.category = _context.Categories.Find(p.category_id);
+            }
+
+            ViewBag.Products = products;
+
+
             return View();
         }
 

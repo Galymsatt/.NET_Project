@@ -10,10 +10,10 @@ namespace WebApplication2core.Models
     {
         [Key]
         public long id { get; set; }
-
+        [Required]
         public long cart_id { get; set; }
         public Cart cart { get; set; }
-
+        [Required]
         public long product_id { get; set; }
         public Product product { get; set; }
 

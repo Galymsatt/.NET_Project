@@ -11,7 +11,8 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+            @*<div asp-validation-summary="All" class="text-danger"></div>*@
             <div class="form-group">
                 <label asp-for="name" class="control-label"></label>
                 <input asp-for="name" class="form-control" />
@@ -28,9 +29,14 @@
                 <span asp-validation-for="price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="category_id" class="control-label"></label>
-                <input asp-for="category_id" class="form-control" />
+
+                <label asp-for="category_id" class="control-label">Category</label>
+                <select class="form-control" asp-for="category_id" asp-items="ViewBag.Categories"></select>
                 <span asp-validation-for="category_id" class="text-danger"></span>
+
+                @*<input asp-for="category_id" class="form-control" />*@
+
+
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

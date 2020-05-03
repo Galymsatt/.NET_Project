@@ -11,6 +11,7 @@ namespace WebApplication2core.Models
 
         [Key]
         public long id { get; set; }
+        [Required]
         public string name { get; set; }
 
     }

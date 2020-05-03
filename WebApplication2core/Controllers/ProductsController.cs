@@ -45,6 +45,9 @@ namespace WebApplication2core.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
+            IEnumerable<Category> categories = _context.Categories.ToList();
+            ViewBag.Categories = new SelectList(categories, "id", "name");
+
             return View();
         }
 
@@ -55,13 +58,36 @@ namespace WebApplication2core.Controllers
         //[ValidateAntiForgeryToken]
         public IActionResult Create([Bind("id,name,content,price,category_id")] Product product)
         {
+
             if (ModelState.IsValid)
             {
+                Category category = _context.Categories.Find(product.category_id);
+                product.category = category;
                 _context.Add(product);
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             return View(product);
+        }
+
+        [AcceptVerbs("Get", "Post")]
+        public IActionResult isNameExists(string name)
+        {
+
+            //var productsTest = _context.Products.Where(p => p.name == name);
+            var productsTest = _context.Products.Where(p => p.name == name);
+           
+            if (productsTest.Any())
+            {
+                Console.WriteLine("There is product with such name: " + name);
+                return Json(data: $"There is product with such name: {name}");
+            }
+            else
+            {
+                return Json(data: true);
+            }
+
+
         }
 
         // GET: Products/Edit/5
