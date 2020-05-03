@@ -17,5 +17,7 @@ At first should create a database before specifying the name of this database (i
 
 You can also import a ready-made database with tables and data.
 Sql 'DataBase.sql' file located as shown in the image below.
+
 You just have to import this sql file into your MySql.
-Then you can run app in your local machine
+
+Then you can run app in your local machine.
