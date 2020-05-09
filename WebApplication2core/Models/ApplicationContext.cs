@@ -15,6 +15,9 @@ namespace WebApplication2core.Models
         public DbSet<CartProduct> CartProducts { get; set; }
         public DbSet<Customer> Customers { get; set; }
 
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+
 
 
         public ApplicationContext()
