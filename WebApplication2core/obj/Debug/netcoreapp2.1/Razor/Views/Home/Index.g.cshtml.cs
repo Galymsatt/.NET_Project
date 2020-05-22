@@ -91,7 +91,7 @@ using WebApplication2core.Models;
             WriteLiteral(" </p>\r\n                <hr class=\"my-4\">\r\n                <p>Category: ");
             EndContext();
             BeginContext(401, 72, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a59847c6e2424cb0884d42cb9bbf5702", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "91486e7fa35842d98e0a5fcab6f7f039", async() => {
                 BeginContext(451, 1, true);
                 WriteLiteral(" ");
                 EndContext();
