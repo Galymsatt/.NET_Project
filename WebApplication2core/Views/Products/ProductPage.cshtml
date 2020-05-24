@@ -1,0 +1,28 @@
+﻿@model WebApplication2core.Models.Product
+@{
+    //Layout = null;
+    ViewData["Title"] = "Product";
+}
+
+
+
+
+
+<div class="container">
+    <h2>Product Page</h2>
+
+    <div class="row">
+
+        <div class="col-md-8">
+            <div class="jumbotron">
+                <h1 class="display-5">Name: @Html.DisplayFor(model => model.name)</h1>
+                <p class="lead">Content: @Html.DisplayFor(model => model.content) </p>
+                <hr class="my-4">
+                <p>Category: <a asp-controller="" asp-action="">  @Html.DisplayFor(model => model.category.name)  </a></p>
+                <p>Full content: @Html.DisplayFor(model => model.fullContent)</p>
+                <a asp-controller="CartOrder" asp-action="AddProductToCart" asp-route-product_id="@Model.id" class="btn btn-success btn-lg" role="button"> Add to cart </a>
+            </div>
+        </div>
+        
+    </div> <!-- row.// -->
+</div> <!-- container //  -->

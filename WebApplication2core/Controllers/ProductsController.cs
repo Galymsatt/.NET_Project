@@ -19,14 +19,74 @@ namespace WebApplication2core.Controllers
             _context = context;
         }
 
+        //[HttpGet("categoryProducts/{categoryId}")]
+        public IActionResult CategoriesProducts(long? categoryId)
+        {
+
+            if (categoryId != null)
+            {
+                var products = _context.Products.Where(p => p.category.id == categoryId);
+                foreach (Product p in products)
+                {
+                    p.category = _context.Categories.Find(p.category_id);
+                }
+                ViewBag.Products = products;
+            }
+            else
+            {
+                var products = _context.Products.ToList();
+                foreach (Product p in products)
+                {
+                    p.category = _context.Categories.Find(p.category_id);
+                }
+                ViewBag.Products = products;
+            }
+
+            
+
+            var categories = _context.Categories.ToList();
+            ViewBag.Categories = categories;
+
+            return View("../Home/Index");
+            //return RedirectToAction();
+        }
+
+        public IActionResult ProductPage(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = _context.Products.Find(id);
+
+            product.category = _context.Categories.Find(product.category_id);
+            
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
+        }
+
         // GET: Products
         [Authorize(Roles = "admin")]
         public IActionResult Index()
         {
-            return View(_context.Products.ToList());
+
+            List<Product> products = _context.Products.ToList();
+            foreach (Product p in products)
+            {
+                p.category = _context.Categories.Find(p.category_id);
+            }
+
+            return View(products);
         }
 
         // GET: Products/Details/5
+        [Authorize(Roles = "admin")]
         public IActionResult Details(long? id)
         {
             if (id == null)
@@ -45,6 +105,7 @@ namespace WebApplication2core.Controllers
         }
 
         // GET: Products/Create
+        [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             IEnumerable<Category> categories = _context.Categories.ToList();
@@ -54,11 +115,10 @@ namespace WebApplication2core.Controllers
         }
 
         // POST: Products/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("id,name,content,price,category_id")] Product product)
+        [Authorize(Roles = "admin")]
+        public IActionResult Create([Bind("id,name,content,fullContent,price,category_id")] Product product)
         {
 
             if (ModelState.IsValid)
@@ -75,8 +135,7 @@ namespace WebApplication2core.Controllers
         [AcceptVerbs("Get", "Post")]
         public IActionResult isNameExists(string name)
         {
-
-            //var productsTest = _context.Products.Where(p => p.name == name);
+            
             var productsTest = _context.Products.Where(p => p.name == name);
            
             if (productsTest.Any())
@@ -93,6 +152,7 @@ namespace WebApplication2core.Controllers
         }
 
         // GET: Products/Edit/5
+        [Authorize(Roles = "admin")]
         public IActionResult Edit(long? id)
         {
             if (id == null)
@@ -109,11 +169,12 @@ namespace WebApplication2core.Controllers
         }
 
         // POST: Products/Edit/5
+        [Authorize(Roles = "admin")]
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public IActionResult Edit(long id, [Bind("id,name,content,price,category_id")] Product product)
+        public IActionResult Edit(long id, [Bind("id,name,content,fullContent,price,category_id")] Product product)
         {
             if (id != product.id)
             {
@@ -144,6 +205,7 @@ namespace WebApplication2core.Controllers
         }
 
         // GET: Products/Delete/5
+        [Authorize(Roles = "admin")]
         public IActionResult Delete(long? id)
         {
             if (id == null)

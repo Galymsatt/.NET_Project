@@ -18,7 +18,8 @@ namespace WebApplication2core.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        //[HttpGet("categoryProducts/{categoryName}")]
+        public IActionResult Index(String categoryName)
         {
 
             List<Product> products = _context.Products.ToList();
@@ -27,6 +28,9 @@ namespace WebApplication2core.Controllers
             }
 
             ViewBag.Products = products;
+
+            var categories = _context.Categories.ToList();
+            ViewBag.Categories = categories;
 
 
             return View();

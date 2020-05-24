@@ -13,10 +13,11 @@ namespace WebApplication2core.Models
         public DbSet<Product> Products { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartProduct> CartProducts { get; set; }
-        public DbSet<Customer> Customers { get; set; }
+        //public DbSet<Customer> Customers { get; set; }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
 
 
@@ -33,7 +34,7 @@ namespace WebApplication2core.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsbuilder)
         
-            => optionsbuilder.UseMySql("server=localhost;port=3307;userid=root;password=;database=.NET_PROJECTDUB2;");
+            => optionsbuilder.UseMySql("server=localhost;port=3307;userid=root;password=;database=.NET_PROJECTDUB3;");
 
         
 

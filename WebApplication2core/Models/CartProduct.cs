@@ -17,5 +17,19 @@ namespace WebApplication2core.Models
         public long product_id { get; set; }
         public Product product { get; set; }
 
+        public CartProduct()
+        {
+        }
+
+        //public CartProduct(long id, long cart_id, Cart cart, long product_id, Product product)
+        //{
+        //    this.id = id;
+        //    this.cart_id = cart_id;
+        //    this.cart = cart;
+        //    this.product_id = product_id;
+        //    this.product = product;
+        //}
+
+
     }
 }

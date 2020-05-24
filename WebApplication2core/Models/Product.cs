@@ -15,10 +15,11 @@ namespace WebApplication2core.Models
         [Key]
         public long id { get; set; }
         [Required]
-        [Remote(action: "isNameExists", controller: "Products")]
+        //[Remote(action: "isNameExists", controller: "Products")]
         public string name { get; set; }
         [Required]
         public string content { get; set; }
+        public string fullContent { get; set; }
         [Required]
         [ValidPriceAttribute(upperBound: 10000000, ErrorMessage = "Product price must not to be more than 10000000")]
         public Double price { get; set; }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,7 @@ namespace WebApplication2core.Controllers
         }
 
         // GET: Categories/Details/5
+        [Authorize(Roles = "admin")]
         public IActionResult Details(long? id)
         {
             if (id == null)
@@ -43,6 +45,7 @@ namespace WebApplication2core.Controllers
         }
 
         // GET: Categories/Create
+        [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             return View();
@@ -52,7 +55,7 @@ namespace WebApplication2core.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public IActionResult Create([Bind("id,name")] Category category)
         {
             if (ModelState.IsValid)
@@ -65,6 +68,7 @@ namespace WebApplication2core.Controllers
         }
 
         // GET: Categories/Edit/5
+        [Authorize(Roles = "admin")]
         public IActionResult Edit(long? id)
         {
             if (id == null)
@@ -81,10 +85,8 @@ namespace WebApplication2core.Controllers
         }
 
         // POST: Categories/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public IActionResult Edit(long id, [Bind("id,name")] Category category)
         {
             if (id != category.id)
@@ -116,6 +118,7 @@ namespace WebApplication2core.Controllers
         }
 
         // GET: Categories/Delete/5
+        [Authorize(Roles = "admin")]
         public IActionResult Delete(long? id)
         {
             if (id == null)
@@ -134,8 +137,8 @@ namespace WebApplication2core.Controllers
         }
 
         // POST: Categories/Delete/5
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(long id)
         {
             var category = _context.Categories.Find(id);

@@ -9,8 +9,8 @@ using WebApplication2core.Models;
 namespace WebApplication2core.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20200429190913_Second")]
-    partial class Second
+    [Migration("20200524140320_order")]
+    partial class order
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,13 +24,15 @@ namespace WebApplication2core.Migrations
                     b.Property<long>("id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<long?>("customerid");
-
                     b.Property<double>("grandTotal");
+
+                    b.Property<int?>("userId");
+
+                    b.Property<long>("user_id");
 
                     b.HasKey("id");
 
-                    b.HasIndex("customerid");
+                    b.HasIndex("userId");
 
                     b.ToTable("Carts");
                 });
@@ -62,23 +64,36 @@ namespace WebApplication2core.Migrations
                     b.Property<long>("id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("name");
+                    b.Property<string>("name")
+                        .IsRequired();
 
                     b.HasKey("id");
 
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("WebApplication2core.Models.Customer", b =>
+            modelBuilder.Entity("WebApplication2core.Models.Order", b =>
                 {
                     b.Property<long>("id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("name");
+                    b.Property<long>("cart_id");
+
+                    b.Property<long?>("cartid");
+
+                    b.Property<bool>("completed");
+
+                    b.Property<int?>("userId");
+
+                    b.Property<long>("user_id");
 
                     b.HasKey("id");
 
-                    b.ToTable("Customers");
+                    b.HasIndex("cartid");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("WebApplication2core.Models.Product", b =>
@@ -90,9 +105,13 @@ namespace WebApplication2core.Migrations
 
                     b.Property<long?>("categoryid");
 
-                    b.Property<string>("content");
+                    b.Property<string>("content")
+                        .IsRequired();
 
-                    b.Property<string>("name");
+                    b.Property<string>("fullContent");
+
+                    b.Property<string>("name")
+                        .IsRequired();
 
                     b.Property<double>("price");
 
@@ -103,11 +122,41 @@ namespace WebApplication2core.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("WebApplication2core.Models.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("WebApplication2core.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("Password");
+
+                    b.Property<int?>("RoleId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("WebApplication2core.Models.Cart", b =>
                 {
-                    b.HasOne("WebApplication2core.Models.Customer", "customer")
+                    b.HasOne("WebApplication2core.Models.User", "user")
                         .WithMany()
-                        .HasForeignKey("customerid");
+                        .HasForeignKey("userId");
                 });
 
             modelBuilder.Entity("WebApplication2core.Models.CartProduct", b =>
@@ -121,11 +170,29 @@ namespace WebApplication2core.Migrations
                         .HasForeignKey("productid");
                 });
 
+            modelBuilder.Entity("WebApplication2core.Models.Order", b =>
+                {
+                    b.HasOne("WebApplication2core.Models.Cart", "cart")
+                        .WithMany()
+                        .HasForeignKey("cartid");
+
+                    b.HasOne("WebApplication2core.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("userId");
+                });
+
             modelBuilder.Entity("WebApplication2core.Models.Product", b =>
                 {
                     b.HasOne("WebApplication2core.Models.Category", "category")
                         .WithMany("products")
                         .HasForeignKey("categoryid");
+                });
+
+            modelBuilder.Entity("WebApplication2core.Models.User", b =>
+                {
+                    b.HasOne("WebApplication2core.Models.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId");
                 });
 #pragma warning restore 612, 618
         }

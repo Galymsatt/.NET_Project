@@ -21,8 +21,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.price)
             </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.category_id)
+            </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.category_id)
+                Category id / name
             </th>
             <th></th>
         </tr>
@@ -39,8 +42,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.price)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.category_id)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.category_id) / @Html.DisplayFor(modelItem => item.category.name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |

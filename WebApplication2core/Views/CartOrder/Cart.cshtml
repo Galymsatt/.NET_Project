@@ -1,0 +1,66 @@
+﻿@model WebApplication2core.Models.Cart
+
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h2 align="center">Cart</h2>
+<br />
+<div class="container">
+    @if (Model != null)
+    {
+    <div class="row">
+        <div class="col-md-9">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Product ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int count = 1;
+                        foreach (CartProduct c in Model.cartProducts)
+                        {
+                            <tr>
+                                <th scope="row">@count</th>
+                                <td>@c.product_id</td>
+                                <td>@c.product.name</td>
+                                <td>@c.product.price KZT</td>
+                                <td>
+                                    <form method="post" asp-action="DeleteCartProduct" asp-controller="CartOrder">
+                                        <input type="hidden" name="cartProductId" value="@c.id" />
+                                        <button type="submit" class="btn btn-secondary"> Remove </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            count++;
+                        }
+
+                    }
+                </tbody>
+            </table>
+        </div> <!-- col.// -->
+
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Total price: <strong>@Model.grandTotal KZT</strong></h3>
+                    
+                    <form method="post" asp-action="MakeOrder" asp-controller="CartOrder">
+                        <button type="submit" class="btn btn-success float-right"> Make purchase </button>
+                    </form>
+                </div>
+            </div>
+        </div> <!-- col.// -->
+    </div> <!-- row.// -->
+    }
+    else{ 
+        <br />
+        <h2 align="center">Your cart is empty</h2>
+    }
+</div> <!-- container //  -->
